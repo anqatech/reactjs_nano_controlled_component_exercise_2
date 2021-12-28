@@ -1,6 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Header from './Header';
+import InputNewItem from './InputNewItem';
+import ListItems from './ListItems';
+import DeleteItem from './DeleteItem';
+
 
 class App extends React.Component {
   state = {
@@ -34,29 +39,23 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">ReactND - Coding Practice</h1>
-        </header>
+        <Header logo={ logo }/>
+
         <h2>Shopping List</h2>
-        <form onSubmit={this.addItem}>
-          <input
-            type="text"
-            placeholder="Enter New Item"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-          <button disabled={this.inputIsEmpty()}>Add</button>
-        </form>
 
-        <button onClick={this.deleteLastItem} disabled={this.noItemsFound()}>
-          Delete Last Item
-        </button>
+        <InputNewItem 
+          value={ this.state.value }
+          addItem={ this.addItem }
+          handleChange={ this.handleChange }
+          inputIsEmpty={ this.inputIsEmpty }
+        />
 
-        <p className="items">Items</p>
-        <ol className="item-list">
-          {this.state.items.map((item, index) => <li key={index}>{item}</li>)}
-        </ol>
+        <DeleteItem
+          deleteLastItem={ this.deleteLastItem }
+          noItemsFound={ this.noItemsFound }
+        />
+
+        <ListItems items={ this.state.items }/>
       </div>
     );
   }
